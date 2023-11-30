@@ -13,7 +13,11 @@ import Modal from '../../containers/Modal';
 import { useData } from '../../contexts/DataContext';
 
 const Page = () => {
-    const { last } = useData(); // Récupération de la dernière prestation
+    // Remplacement de "last" par "data", déjà présent dans DataContext.Provider
+    const { data } = useData();
+    // Récuperation du dernier event du tableaux
+    // Si nous récupérons bien des données, nous appliquons la condition présente dans la variable suivante
+    const lastEvent = data && data.events ? data.events[data.events.length - 1] : null;
     return (
         <>
             <header>
@@ -26,31 +30,31 @@ const Page = () => {
                 <section className="ServicesContainer">
                     <h2 className="Title">Nos services</h2>
                     <p>Nous organisons des événements sur mesure partout dans le monde</p>
-                    <div className="ListContainer">
+                    <div className="ListContainer" id="nos-services">
                         <ServiceCard imageSrc="/images/priscilla-du-preez-Q7wGvnbuwj0-unsplash1.png">
                             <h3>Soirée d’entreprise</h3>
                             Une soirée d’entreprise vous permet de réunir vos équipes pour un moment convivial afin de valoriser votre société en
-                            projetant une image dynamique. Nous vous proposons d’organiser pour vous vos diners et soirée d’entreprise
+                            projetant une image dynamique. Nous vous proposons d’organiser pour vous vos dîners et soirées d’entreprise.
                         </ServiceCard>
                         <ServiceCard imageSrc="/images/hall-expo.png">
                             <h3>Conférences</h3>
-                            77 events vous propose d’organiser votre évènement, quelle que soit sa taille, en s’adaptant à votre demande et à vos
-                            demandes. En tant que spécialistes de l’évènementiel, nous saurons trouver le lieu parfait ainsi que des solutions
-                            inédites pour capter votre audience et faire de cet évènement un succès
+                            77 events vous propose d’organiser votre événement, quelle que soit sa taille, en s’adaptant à votre demande et à vos
+                            demandes. En tant que spécialistes de l’événementiel, nous saurons trouver le lieu parfait ainsi que des solutions
+                            inédites pour capter votre audience et faire de cet événement un succès.
                         </ServiceCard>
                         <ServiceCard imageSrc="/images/sophia-sideri-LFXMtUuAKK8-unsplash1.png">
-                            <h3>Experience digitale</h3>
+                            <h3>Expérience digitale</h3>
                             Notre agence experte en contenus immersifs offre des services de conseil aux entreprises, pour l’utilisation de la réalité
                             virtuelle, de la réalité augmentée et de la réalité mixte de l’animation événementielle, à la veille technologique
-                            jusqu’au développement de module de formation innovant
+                            jusqu’au développement de module de formation innovant.
                         </ServiceCard>
                     </div>
                 </section>
-                <section className="EventsContainer">
+                <section className="EventsContainer" id="nos-realisations">
                     <h2 className="Title">Nos réalisations</h2>
                     <EventList />
                 </section>
-                <section className="PeoplesContainer">
+                <section className="PeoplesContainer" id="notre-equipe">
                     <h2 className="Title">Notre équipe</h2>
                     <p>Une équipe d’experts dédiés à l’ogranisation de vos événements</p>
                     <div className="ListContainer">
@@ -87,16 +91,16 @@ const Page = () => {
             <footer className="row">
                 <div className="col presta">
                     <h3>Notre dernière prestation</h3>
-                    {last && ( // Vérification que last existe avant d'utiliser EventCard (erreur console disant que les données ci-dessous sont required mais undefined)
+                    {/* Si on recupère bien un événement alors on peut render EventCard avec les bonnes données */}
+                    {lastEvent && (
                         <EventCard
-                            imageSrc={last?.cover}
-                            title={last?.title}
-                            date={new Date(last?.date)}
+                            imageSrc={lastEvent?.cover}
+                            title={lastEvent?.title}
+                            date={new Date(lastEvent?.date)}
                             small
-                            label={last?.type} // Affichage du type d'évènement dans le label
+                            label="Soirée entreprise"
                         />
                     )}
-                    ;
                 </div>
                 <div className="col contact">
                     <h3>Contactez-nous</h3>
@@ -121,12 +125,13 @@ const Page = () => {
                 <div className="col description">
                     <Logo size="large" />
                     <p>
-                        Une agence événementielle propose des prestations de service spécialisées dans la conception et l&apos;organisation de divers
-                        événements tels que des événements festifs, des manifestations sportives et culturelles, des événements professionnels
+                        Une agence événementielle propose des prestations de services spécialisées dans la conception et l&apos;organisation de divers
+                        événements tels que des événements festifs, des manifestations sportives et culturelles, des événements professionnels.
                     </p>
                 </div>
             </footer>
         </>
     );
 };
+
 export default Page;
