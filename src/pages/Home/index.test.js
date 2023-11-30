@@ -1,6 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import Home from './index';
 
+// Vérifie si une liste de champs est affichée dans le formulaire
 describe('When Form is created', () => {
     it('a list of fields card is displayed', async () => {
         render(<Home />);
@@ -10,6 +11,7 @@ describe('When Form is created', () => {
         await screen.findByText('Personel / Entreprise');
     });
 
+    // Vérifie si le message de succès est affiché après la soumission du formulaire
     describe('and a click is triggered on the submit button', () => {
         it('the success message is displayed', async () => {
             render(<Home />);
@@ -26,22 +28,26 @@ describe('When Form is created', () => {
     });
 });
 
+// Vérifie si la section Nos services est rendue correctement
 describe('When a page is created', () => {
     it("renders 'Nos services' section", () => {
         render(<Home />);
         expect(screen.getByText('Nous organisons des événements sur mesure partout dans le monde')).toBeInTheDocument();
     });
 
+    // Vérifie si la section Nos réalisations est rendu correctement
     it("renders 'Nos réalisations' section", () => {
         render(<Home />);
         screen.findByText('Catégories');
     });
 
+    // Vérifie si la section Notre équipe est rendue correctement
     it("renders 'Notre équipe' section", () => {
         render(<Home />);
         expect(screen.getByText('Une équipe d’experts dédiés à l’ogranisation de vos événements')).toBeInTheDocument();
     });
 
+    // Vérifie si les éléments Contactez nous et Notre dernière prestation sont présents dans le footer
     it("renders 'Contactez nous' and 'Notre dernière préstation' ", () => {
         render(<Home />);
 
